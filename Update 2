@@ -1,0 +1,2257 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Eazy Work v23">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Eazy Work v23 - Advanced Job Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 40px rgba(0, 0, 0, 0.12);
+            --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.15);
+            --border-radius: 24px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --animation-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            font-size: 16px;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+        
+        /* Enhanced glass morphism */
+        .glass-effect {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+        }
+        
+        .glass-effect-strong {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        /* Advanced card system */
+        .card-modern {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s;
+        }
+        
+        .card-modern:hover::before {
+            left: 100%;
+        }
+        
+        .card-modern:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-heavy);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Premium gradient text */
+        .gradient-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            position: relative;
+        }
+        
+        .gradient-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gradient-text:hover::after {
+            opacity: 1;
+        }
+        
+        /* Enhanced floating animations */
+        .floating-card {
+            transform: translateY(0);
+            transition: var(--transition);
+            will-change: transform;
+            animation: gentleFloat 6s ease-in-out infinite;
+        }
+        
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .floating-card:hover {
+            animation-play-state: paused;
+            transform: translateY(-12px) scale(1.03);
+        }
+        
+        .floating-card:active {
+            transform: translateY(2px) scale(0.98);
+            transition: transform 0.1s ease;
+        }
+        
+        /* Premium button system */
+        .modern-button {
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: var(--border-radius);
+            color: white;
+            font-weight: 700;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .modern-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--secondary-gradient);
+            transition: left 0.3s ease;
+            z-index: 0;
+        }
+        
+        .modern-button:hover::before {
+            left: 0;
+        }
+        
+        .modern-button span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .modern-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+        
+        .modern-button:active {
+            transform: translateY(1px) scale(0.98);
+            box-shadow: var(--shadow-light);
+        }
+        
+        /* Advanced status system */
+        .status-badge {
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 8px 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .status-urgent {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-premium {
+            background: linear-gradient(135deg, #feca57 0%, #ff9ff3 100%);
+            color: white;
+        }
+        
+        .status-verified {
+            background: linear-gradient(135deg, #48dbfb 0%, #0abde3 100%);
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+        
+        /* Enhanced job cards */
+        .job-card {
+            transition: all 0.4s var(--animation-bounce);
+            transform: translateY(0) rotateX(0);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(102, 126, 234, 0.1);
+        }
+        
+        .job-card:active {
+            transform: translateY(-5px) rotateX(2deg) scale(0.98);
+        }
+        
+        /* Premium category buttons */
+        .category-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s var(--animation-bounce);
+            transform-origin: center;
+        }
+        
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+        }
+        
+        .category-btn:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+        
+        .category-btn.active {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-heavy);
+            background: var(--primary-gradient);
+            color: white;
+        }
+        
+        .category-btn:hover:not(.active) {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        /* Advanced modal system */
+        .modal-enter {
+            animation: modalEnterAdvanced 0.5s var(--animation-bounce);
+        }
+        
+        @keyframes modalEnterAdvanced {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.8) translateY(50px) rotateX(-10deg);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05) translateY(-10px) rotateX(5deg);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) translateY(0) rotateX(0);
+            }
+        }
+        
+        /* Enhanced loading states */
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        /* Premium salary display */
+        .salary-badge {
+            background: var(--success-gradient);
+            color: white;
+            font-weight: 800;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .salary-badge::before {
+            content: '💰';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 40px;
+            opacity: 0.2;
+            animation: coinFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes coinFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(180deg); }
+        }
+        
+        /* Advanced responsive system */
+        .container-premium {
+            padding: 12px;
+            max-width: 100vw;
+            overflow-x: hidden;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        @media (min-width: 480px) {
+            .container-premium { padding: 16px; }
+        }
+        
+        @media (min-width: 768px) {
+            .container-premium { 
+                max-width: 800px; 
+                padding: 24px; 
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .container-premium { 
+                max-width: 1200px; 
+                padding: 32px; 
+            }
+        }
+        
+        /* Enhanced typography */
+        .text-premium-xl {
+            font-size: clamp(28px, 8vw, 42px);
+            line-height: 1.1;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+        
+        .text-premium-lg {
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.3;
+            font-weight: 600;
+        }
+        
+        .text-premium {
+            font-size: clamp(14px, 3.5vw, 16px);
+            line-height: 1.5;
+        }
+        
+        /* Premium button sizing */
+        .button-premium {
+            min-height: 56px;
+            font-size: clamp(14px, 3.5vw, 16px);
+            padding: 16px 24px;
+            border-radius: 20px;
+            font-weight: 700;
+            width: 100%;
+            margin-bottom: 12px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Enhanced input system */
+        .input-premium {
+            font-size: 16px;
+            min-height: 60px;
+            padding: 18px 20px;
+            border-radius: 20px;
+            border: 2px solid #e5e7eb;
+            transition: var(--transition);
+            width: 100%;
+            background: white;
+            -webkit-appearance: none;
+            appearance: none;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .input-premium:focus {
+            border-color: #667eea;
+            box-shadow: 
+                0 0 0 4px rgba(102, 126, 234, 0.1),
+                var(--shadow-medium);
+            outline: none;
+            transform: translateY(-2px);
+        }
+        
+        /* Advanced grid system */
+        .grid-premium {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        
+        @media (min-width: 640px) {
+            .grid-premium {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .grid-premium {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 24px;
+            }
+        }
+        
+        /* Enhanced icon system */
+        .icon-premium {
+            font-size: 24px;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
+            transition: var(--transition);
+            box-shadow: var(--shadow-light);
+        }
+        
+        .icon-premium:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        /* Premium notification system */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 16px;
+            padding: 16px 20px;
+            box-shadow: var(--shadow-heavy);
+            border-left: 4px solid #10b981;
+            transform: translateX(400px);
+            transition: transform 0.4s var(--animation-bounce);
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            border-left-color: #ef4444;
+        }
+        
+        .notification.warning {
+            border-left-color: #f59e0b;
+        }
+        
+        /* Advanced scroll indicators */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+        
+        /* Premium loading spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(102, 126, 234, 0.1);
+            border-left: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Enhanced accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .card-modern {
+                background: rgba(30, 30, 30, 0.9);
+                color: white;
+                border-color: rgba(255, 255, 255, 0.1);
+            }
+            
+            .input-premium {
+                background: rgba(30, 30, 30, 0.9);
+                color: white;
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+        
+        /* Mobile-first optimizations */
+        .mobile-app {
+            max-width: 100vw;
+            overflow-x: hidden;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .mobile-container {
+            padding: 16px;
+            max-width: 100%;
+            margin: 0;
+        }
+        
+        /* Mobile header */
+        .mobile-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--primary-gradient);
+            padding: 16px;
+            margin: -16px -16px 16px -16px;
+            border-radius: 0 0 24px 24px;
+            box-shadow: var(--shadow-medium);
+        }
+        
+        /* Mobile cards */
+        .mobile-card {
+            margin-bottom: 16px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        /* Mobile buttons */
+        .mobile-btn {
+            min-height: 48px;
+            font-size: 16px;
+            border-radius: 16px;
+            padding: 12px 20px;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+        
+        /* Mobile grid */
+        .mobile-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        
+        @media (min-width: 640px) {
+            .mobile-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Mobile modal */
+        .mobile-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: end;
+            padding: 0;
+        }
+        
+        .mobile-modal-content {
+            background: white;
+            border-radius: 24px 24px 0 0;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUpMobile 0.3s ease-out;
+        }
+        
+        @keyframes slideUpMobile {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        
+        @media (min-width: 768px) {
+            .mobile-modal {
+                align-items: center;
+                padding: 20px;
+            }
+            
+            .mobile-modal-content {
+                border-radius: 24px;
+                max-width: 600px;
+                margin: 0 auto;
+                max-height: 80vh;
+            }
+        }
+        
+        /* Touch-friendly interactions */
+        .touch-target {
+            min-height: 44px;
+            min-width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Mobile typography */
+        .mobile-title {
+            font-size: clamp(24px, 6vw, 32px);
+            line-height: 1.2;
+            font-weight: 800;
+        }
+        
+        .mobile-subtitle {
+            font-size: clamp(14px, 4vw, 16px);
+            line-height: 1.4;
+        }
+        
+        /* Safe area handling */
+        .safe-area-top {
+            padding-top: env(safe-area-inset-top);
+        }
+        
+        .safe-area-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        .safe-area-left {
+            padding-left: env(safe-area-inset-left);
+        }
+        
+        .safe-area-right {
+            padding-right: env(safe-area-inset-right);
+        }
+        
+        /* Mobile search */
+        .mobile-search {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: white;
+            margin: 0 -16px 16px -16px;
+            padding: 16px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: var(--shadow-light);
+        }
+        
+        /* Improved touch feedback */
+        .mobile-card:active {
+            transform: scale(0.98);
+            transition: transform 0.1s ease;
+        }
+        
+        .mobile-btn:active {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scroll-indicator"></div>
+    
+    <div class="mobile-app min-h-screen safe-area-top safe-area-bottom">
+        <div class="mobile-container safe-area-left safe-area-right">
+            <!-- Mobile Header -->
+            <div class="mobile-header">
+                <div class="text-center">
+                    <h1 class="mobile-title gradient-text mb-2" data-text="💼 Eazy Work">💼 Eazy Work</h1>
+                    <p class="text-white/90 mobile-subtitle mb-4">แพลตฟอร์มหางานระดับพรีเมียม</p>
+                </div>
+                
+                <!-- Mobile Mode Toggle -->
+                <div class="glass-effect-strong p-3 mb-4">
+                    <div class="grid grid-cols-2 gap-2">
+                        <button id="job-seeker-btn" onclick="switchMode('job-seeker')" class="mode-btn active mobile-btn modern-button">
+                            <span class="text-xl">🔍</span>
+                            <span class="mobile-subtitle">หางาน</span>
+                        </button>
+                        <button id="employer-btn" onclick="switchMode('employer')" class="mode-btn mobile-btn bg-white/20 text-white border-2 border-white/30">
+                            <span class="text-xl">👥</span>
+                            <span class="mobile-subtitle">หาพนักงาน</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Add Job Button (only visible in job-seeker mode) -->
+                <div id="add-job-section" class="glass-effect-strong p-3">
+                    <button onclick="showAddJobModal()" class="modern-button mobile-btn">
+                        <span class="text-xl">➕</span>
+                        <span class="mobile-subtitle">เพิ่มการจ้างงาน</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Category Filter -->
+            <div class="mobile-card card-modern p-4 mb-4" id="category-filter">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="touch-target bg-gray-100 rounded-full">🏷️</div>
+                    <h2 class="mobile-subtitle text-gray-800 font-bold">ประเภทงาน</h2>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="filterByCategory('urgent')" class="category-btn category-modern active mobile-btn">
+                        <span class="text-xl">🚨</span>
+                        <span class="mobile-subtitle">เร่งด่วน</span>
+                        <div class="status-badge status-urgent mt-1 text-xs">HOT</div>
+                    </button>
+                    <button onclick="filterByCategory('permanent')" class="category-btn category-modern mobile-btn">
+                        <span class="text-xl">👔</span>
+                        <span class="mobile-subtitle">พนักงานประจำ</span>
+                        <div class="status-badge status-verified mt-1 text-xs">VERIFIED</div>
+                    </button>
+                    <button onclick="filterByCategory('part-time')" class="category-btn category-modern mobile-btn">
+                        <span class="text-xl">⏰</span>
+                        <span class="mobile-subtitle">จ๊อบเสริม</span>
+                        <div class="status-badge status-premium mt-1 text-xs">FLEXIBLE</div>
+                    </button>
+                    <button onclick="filterByCategory('all')" class="category-btn category-modern mobile-btn">
+                        <span class="text-xl">🌟</span>
+                        <span class="mobile-subtitle">ทั้งหมด</span>
+                        <div class="status-badge bg-gray-500 text-white mt-1 text-xs">ALL</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <div class="mobile-search">
+                <div class="flex items-center gap-3">
+                    <div class="touch-target bg-gray-100 rounded-full flex-shrink-0">🔍</div>
+                    <div class="flex-1">
+                        <input type="text" id="search-input" placeholder="ค้นหางาน, บริษัท, หรือทักษะ..." class="input-premium" onkeyup="handleSearch(event)">
+                    </div>
+                    <button onclick="performSearch()" class="modern-button mobile-btn px-4 py-3 flex-shrink-0">
+                        <span class="mobile-subtitle">ค้นหา</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Jobs Grid -->
+            <div id="jobs-grid" class="mobile-grid">
+                <!-- Job cards will be populated by JavaScript -->
+            </div>
+
+            <!-- Enhanced No Results -->
+            <div id="no-results" class="hidden card-modern p-8 text-center slide-up">
+                <div class="text-8xl mb-6 pulse-effect">🔍</div>
+                <h3 class="text-premium-lg text-gray-700 mb-4">ไม่พบข้อมูลในประเภทนี้</h3>
+                <p class="text-premium text-gray-500 mb-6">ลองเลือกประเภทอื่นหรือดูทั้งหมด</p>
+                <button onclick="filterByCategory('all')" class="modern-button">
+                    <span>ดูทั้งหมด</span>
+                </button>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loading" class="hidden text-center py-12">
+                <div class="spinner mx-auto mb-4"></div>
+                <p class="text-white/80">กำลังโหลด...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Job Detail Modal -->
+    <div id="detail-modal" class="hidden mobile-modal safe-area-bottom">
+        <div class="mobile-modal-content">
+            <div id="modal-content">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Chat Modal -->
+    <div id="chat-modal" class="hidden mobile-modal safe-area-bottom">
+        <div class="mobile-modal-content">
+            <div class="p-6">
+                <!-- Chat content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Add Job Modal -->
+    <div id="add-job-modal" class="hidden mobile-modal safe-area-bottom">
+        <div class="mobile-modal-content">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">เพิ่มการจ้างงาน</h2>
+                    <button onclick="closeAddJobModal()" class="text-gray-400 hover:text-gray-600 text-4xl p-2 rounded-full hover:bg-gray-100">×</button>
+                </div>
+                
+                <form id="add-job-form" onsubmit="submitJob(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">ชื่อตำแหน่งงาน *</label>
+                            <input type="text" id="job-title" required class="input-premium" placeholder="เช่น Senior Developer">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">ชื่อบริษัท *</label>
+                            <input type="text" id="job-company" required class="input-premium" placeholder="เช่น Tech Company Ltd.">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">ประเภทงาน *</label>
+                            <select id="job-category" required class="input-premium">
+                                <option value="">เลือกประเภทงาน</option>
+                                <option value="urgent">เร่งด่วน</option>
+                                <option value="permanent">พนักงานประจำ</option>
+                                <option value="part-time">จ๊อบเสริม</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">ประเภทการจ้าง *</label>
+                            <select id="job-type" required class="input-premium">
+                                <option value="">เลือกประเภทการจ้าง</option>
+                                <option value="full-time">เต็มเวลา</option>
+                                <option value="part-time">พาร์ทไทม์</option>
+                                <option value="contract">สัญญาจ้าง</option>
+                                <option value="freelance">ฟรีแลนซ์</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">สถานที่ทำงาน *</label>
+                        <input type="text" id="job-location" required class="input-premium" placeholder="เช่น กรุงเทพฯ (ไฮบริด)">
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">เงินเดือนต่ำสุด (บาท) *</label>
+                            <input type="number" id="job-salary-min" required class="input-premium" placeholder="25000">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">เงินเดือนสูงสุด (บาท) *</label>
+                            <input type="number" id="job-salary-max" required class="input-premium" placeholder="45000">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">ประสบการณ์ที่ต้องการ (ปี) *</label>
+                        <input type="number" id="job-experience" required class="input-premium" placeholder="2" min="0">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">รายละเอียดงาน *</label>
+                        <textarea id="job-description" required class="input-premium min-h-[120px] resize-none" placeholder="อธิบายรายละเอียดงาน หน้าที่ความรับผิดชอบ..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">ทักษะที่ต้องการ</label>
+                        <input type="text" id="job-skills" class="input-premium" placeholder="เช่น React, Node.js, Python (คั่นด้วยเครื่องหมายจุลภาค)">
+                        <p class="text-sm text-gray-500 mt-1">แยกแต่ละทักษะด้วยเครื่องหมายจุลภาค</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">สวัสดิการ</label>
+                        <input type="text" id="job-benefits" class="input-premium" placeholder="เช่น ประกันสุขภาพ, โบนัส, ลาพักร้อน (คั่นด้วยเครื่องหมายจุลภาค)">
+                        <p class="text-sm text-gray-500 mt-1">แยกแต่ละสวัสดิการด้วยเครื่องหมายจุลภาค</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" id="job-featured" class="w-5 h-5 text-indigo-600 rounded">
+                            <span class="text-sm font-semibold text-gray-700">งานแนะนำ (Featured)</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" id="job-urgent" class="w-5 h-5 text-red-600 rounded">
+                            <span class="text-sm font-semibold text-gray-700">เร่งด่วน (Urgent)</span>
+                        </label>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <button type="button" onclick="closeAddJobModal()" class="button-premium bg-gray-300 text-gray-700 flex-1">
+                            <span>ยกเลิก</span>
+                        </button>
+                        <button type="submit" class="modern-button flex-1">
+                            <span class="text-xl">✅</span>
+                            <span>เพิ่มงาน</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <script>
+        // Enhanced sample data with premium features
+        let jobs = [
+            {
+                id: 1,
+                title: "Senior Software Engineer",
+                company: "TechCorp Thailand",
+                category: "urgent",
+                location: "กรุงเทพฯ (ไฮบริด)",
+                salaryMin: 80000,
+                salaryMax: 120000,
+                type: "full-time",
+                description: "พัฒนาระบบขนาดใหญ่ด้วย React, Node.js และ Cloud Technologies",
+                experience: 5,
+                applications: 23,
+                posted: "2024-01-28",
+                featured: true,
+                urgent: true,
+                benefits: ["ประกันสุขภาพ", "โบนัส 4 เดือน", "Work from Home", "Stock Options"],
+                skills: ["React", "Node.js", "AWS", "Docker"],
+                companyLogo: "🚀"
+            },
+            {
+                id: 2,
+                title: "Digital Marketing Manager",
+                company: "Creative Agency Plus",
+                category: "permanent",
+                location: "กรุงเทพฯ (ออนไซต์)",
+                salaryMin: 45000,
+                salaryMax: 65000,
+                type: "full-time",
+                description: "วางแผนและดำเนินการแคมเปญการตลาดดิจิทัล บริหารทีมและงบประมาณ",
+                experience: 3,
+                applications: 18,
+                posted: "2024-01-27",
+                featured: true,
+                benefits: ["ประกันสุขภาพ", "โบนัสผลงาน", "ลาพักร้อน 15 วัน"],
+                skills: ["Google Ads", "Facebook Ads", "SEO", "Analytics"],
+                companyLogo: "🎨"
+            },
+            {
+                id: 3,
+                title: "UX/UI Designer",
+                company: "Design Studio Pro",
+                category: "permanent",
+                location: "กรุงเทพฯ (ไฮบริด)",
+                salaryMin: 35000,
+                salaryMax: 55000,
+                type: "full-time",
+                description: "ออกแบบ User Experience และ User Interface สำหรับแอปพลิเคชันและเว็บไซต์",
+                experience: 2,
+                applications: 31,
+                posted: "2024-01-26",
+                benefits: ["ประกันสุขภาพ", "อุปกรณ์ทำงาน", "ฝึกอบรม"],
+                skills: ["Figma", "Adobe XD", "Sketch", "Prototyping"],
+                companyLogo: "🎯"
+            },
+            {
+                id: 4,
+                title: "Content Creator (Part-time)",
+                company: "Social Media Hub",
+                category: "part-time",
+                location: "รีโมทเวิร์ค",
+                salaryMin: 15000,
+                salaryMax: 25000,
+                type: "part-time",
+                description: "สร้างคอนเทนต์สำหรับ Social Media, เขียนบทความ, ถ่ายภาพและวิดีโอ",
+                experience: 1,
+                applications: 42,
+                posted: "2024-01-28",
+                benefits: ["ชั่วโมงยืดหยุ่น", "อุปกรณ์ถ่ายภาพ", "โบนัสผลงาน"],
+                skills: ["Photography", "Video Editing", "Writing", "Social Media"],
+                companyLogo: "📱"
+            },
+            {
+                id: 5,
+                title: "Data Scientist",
+                company: "AI Innovation Lab",
+                category: "urgent",
+                location: "กรุงเทพฯ (ออนไซต์)",
+                salaryMin: 70000,
+                salaryMax: 100000,
+                type: "full-time",
+                description: "วิเคราะห์ข้อมูลขนาดใหญ่ สร้างโมเดล Machine Learning และ AI",
+                experience: 4,
+                applications: 15,
+                posted: "2024-01-28",
+                featured: true,
+                urgent: true,
+                benefits: ["ประกันสุขภาพ", "โบนัส 6 เดือน", "GPU Workstation", "Conference Budget"],
+                skills: ["Python", "TensorFlow", "SQL", "Statistics"],
+                companyLogo: "🤖"
+            },
+            {
+                id: 6,
+                title: "Sales Executive",
+                company: "Global Sales Corp",
+                category: "permanent",
+                location: "กรุงเทพฯ (ออนไซต์)",
+                salaryMin: 25000,
+                salaryMax: 40000,
+                type: "full-time",
+                description: "ขายผลิตภัณฑ์และบริการ ดูแลลูกค้า สร้างความสัมพันธ์ทางธุรกิจ",
+                experience: 1,
+                applications: 28,
+                posted: "2024-01-25",
+                benefits: ["คอมมิชชั่นสูง", "รถประจำตำแหน่ง", "ประกันสุขภาพ"],
+                skills: ["Sales", "CRM", "Negotiation", "Presentation"],
+                companyLogo: "📈"
+            }
+        ];
+
+        let companies = [];
+
+        let people = [
+            {
+                id: 1,
+                name: "สมชาย วิทยาการ",
+                position: "Senior Full Stack Developer",
+                age: 28,
+                location: "กรุงเทพฯ",
+                expectedSalary: "65,000",
+                workType: "full-time",
+                experience: 6,
+                rating: 4.8,
+                projects: 45,
+                available: true,
+                education: "วิทยาศาสตรบัณฑิต คอมพิวเตอร์",
+                portfolio: "github.com/somchai-dev",
+                phone: "081-234-5678",
+                description: "นักพัฒนาเว็บไซต์ที่มีประสบการณ์ 6 ปี เชี่ยวชาญ React, Node.js และ Cloud Technologies พร้อมทำงานในทีมหรือเป็น Tech Lead",
+                skills: ["React", "Node.js", "TypeScript", "AWS", "Docker", "MongoDB"],
+                certifications: ["AWS Certified Developer", "Google Cloud Professional"],
+                avatar: "👨‍💻"
+            },
+            {
+                id: 2,
+                name: "นิดา ดีไซน์",
+                position: "UX/UI Designer",
+                age: 25,
+                location: "กรุงเทพฯ (รีโมท)",
+                expectedSalary: "45,000",
+                workType: "full-time",
+                experience: 4,
+                rating: 4.9,
+                projects: 32,
+                available: true,
+                education: "ศิลปบัณฑิต การออกแบบ",
+                portfolio: "behance.net/nida-design",
+                phone: "082-345-6789",
+                description: "UX/UI Designer ที่หลงใหลในการสร้างประสบการณ์ผู้ใช้ที่ดี มีประสบการณ์ทำงานกับ Startup และบริษัทขนาดใหญ่",
+                skills: ["Figma", "Adobe XD", "Sketch", "Prototyping", "User Research", "Wireframing"],
+                certifications: ["Google UX Design Certificate"],
+                avatar: "👩‍🎨"
+            },
+            {
+                id: 3,
+                name: "อรรถพล การตลาด",
+                position: "Digital Marketing Specialist",
+                age: 30,
+                location: "กรุงเทพฯ",
+                expectedSalary: "50,000",
+                workType: "full-time",
+                experience: 5,
+                rating: 4.7,
+                projects: 28,
+                available: false,
+                education: "บริหารธุรกิจบัณฑิต การตลาด",
+                portfolio: "linkedin.com/in/arthapol-marketing",
+                phone: "083-456-7890",
+                description: "ผู้เชี่ยวชาญด้านการตลาดดิจิทัล มีประสบการณ์ในการบริหารแคมเปญโฆษณาออนไลน์และเพิ่มยอดขาย",
+                skills: ["Google Ads", "Facebook Ads", "SEO", "Analytics", "Content Marketing", "Social Media"],
+                certifications: ["Google Ads Certified", "Facebook Blueprint"],
+                avatar: "👨‍💼"
+            },
+            {
+                id: 4,
+                name: "มาลี คอนเทนต์",
+                position: "Content Creator",
+                age: 23,
+                location: "รีโมทเวิร์ค",
+                expectedSalary: "25,000",
+                workType: "freelance",
+                experience: 2,
+                rating: 4.6,
+                projects: 18,
+                available: true,
+                education: "นิเทศศาสตรบัณฑิต",
+                portfolio: "instagram.com/mali_content",
+                phone: "084-567-8901",
+                description: "Content Creator ที่สร้างสรรค์คอนเทนต์ที่น่าสนใจ เชี่ยวชาญการถ่ายภาพ วิดีโอ และการเขียน",
+                skills: ["Photography", "Video Editing", "Writing", "Social Media", "Canva", "Adobe Premiere"],
+                avatar: "👩‍📱"
+            },
+            {
+                id: 5,
+                name: "วิชัย ข้อมูล",
+                position: "Data Scientist",
+                age: 32,
+                location: "กรุงเทพฯ",
+                expectedSalary: "80,000",
+                workType: "full-time",
+                experience: 7,
+                rating: 4.9,
+                projects: 25,
+                available: true,
+                education: "วิทยาศาสตรมหาบัณฑิต สถิติ",
+                portfolio: "kaggle.com/vichai-data",
+                phone: "085-678-9012",
+                description: "Data Scientist ที่มีประสบการณ์ในการวิเคราะห์ข้อมูลขนาดใหญ่และสร้างโมเดล Machine Learning",
+                skills: ["Python", "R", "SQL", "TensorFlow", "Tableau", "Statistics"],
+                certifications: ["Microsoft Azure Data Scientist", "Tableau Desktop Specialist"],
+                avatar: "👨‍🔬"
+            },
+            {
+                id: 6,
+                name: "สุดา ขายดี",
+                position: "Sales Executive",
+                age: 27,
+                location: "กรุงเทพฯ",
+                expectedSalary: "35,000",
+                workType: "full-time",
+                experience: 3,
+                rating: 4.5,
+                projects: 22,
+                available: true,
+                education: "บริหารธุรกิจบัณฑิต",
+                phone: "086-789-0123",
+                description: "Sales Executive ที่มีทักษะการขายและการสื่อสารที่ดีเยี่ยม มีประสบการณ์ในการดูแลลูกค้าและสร้างยอดขาย",
+                skills: ["Sales", "CRM", "Negotiation", "Presentation", "Customer Service", "Lead Generation"],
+                avatar: "👩‍💼"
+            }
+        ];
+
+        let currentFilter = 'urgent';
+        let editingId = null;
+        let currentMode = 'job-seeker';
+        let currentChatPerson = null;
+        let chatMessages = [];
+        let searchQuery = '';
+
+        // Premium category information
+        const categoryInfo = {
+            permanent: { icon: '👔', name: 'พนักงานประจำ', color: 'blue' },
+            urgent: { icon: '🚨', name: 'เร่งด่วน', color: 'red' },
+            'part-time': { icon: '⏰', name: 'จ๊อบเสริม', color: 'green' },
+            all: { icon: '🌟', name: 'ทั้งหมด', color: 'purple' }
+        };
+
+        const jobTypeNames = {
+            'full-time': 'เต็มเวลา',
+            'part-time': 'พาร์ทไทม์',
+            'contract': 'สัญญาจ้าง',
+            'freelance': 'ฟรีแลนซ์'
+        };
+
+        // Initialize premium app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePremiumFeatures();
+            renderJobs();
+            updateModeUI();
+            showWelcomeNotification();
+        });
+
+        // Initialize premium features
+        function initializePremiumFeatures() {
+            // Scroll indicator
+            window.addEventListener('scroll', updateScrollIndicator);
+            
+            // Search functionality
+            document.getElementById('search-input').addEventListener('input', debounce(handleSearchInput, 300));
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', handleKeyboardShortcuts);
+            
+            // Auto-save search preferences
+            loadSearchPreferences();
+            
+            // Initialize animations
+            initializeAnimations();
+        }
+
+        // Update scroll indicator
+        function updateScrollIndicator() {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-indicator').style.width = scrolled + '%';
+        }
+
+        // Handle keyboard shortcuts
+        function handleKeyboardShortcuts(event) {
+            if (event.ctrlKey || event.metaKey) {
+                switch(event.key) {
+                    case 'k':
+                        event.preventDefault();
+                        document.getElementById('search-input').focus();
+                        break;
+                    case '1':
+                        event.preventDefault();
+                        filterByCategory('urgent');
+                        break;
+                    case '2':
+                        event.preventDefault();
+                        filterByCategory('permanent');
+                        break;
+                    case '3':
+                        event.preventDefault();
+                        filterByCategory('part-time');
+                        break;
+                }
+            }
+        }
+
+        // Debounce function for search
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Handle search input
+        function handleSearchInput(event) {
+            searchQuery = event.target.value.toLowerCase();
+            renderJobs();
+        }
+
+        // Handle search keypress
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        }
+
+        // Perform search
+        function performSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            searchQuery = query;
+            renderJobs();
+            saveSearchPreferences();
+            
+            if (query) {
+                showNotification(`ค้นหา "${query}" พบ ${getFilteredJobs().length} รายการ`, 'success');
+            }
+        }
+
+        // Quick search functionality
+        function quickSearch(type) {
+            switch(type) {
+                case 'urgent':
+                    filterByCategory('urgent');
+                    break;
+                case 'high-salary':
+                    searchQuery = '';
+                    document.getElementById('search-input').value = '';
+                    renderJobsBySalary();
+                    break;
+            }
+        }
+
+        // Render jobs by salary (high to low)
+        function renderJobsBySalary() {
+            const sortedJobs = [...jobs].sort((a, b) => b.salaryMax - a.salaryMax);
+            renderJobsWithData(sortedJobs);
+            showNotification('แสดงงานเรียงตามเงินเดือนสูงสุด', 'success');
+        }
+
+        // Get filtered jobs
+        function getFilteredJobs() {
+            let filteredJobs = currentMode === 'job-seeker' ? jobs : people;
+            
+            // Apply category filter
+            if (currentFilter !== 'all') {
+                if (currentMode === 'job-seeker') {
+                    filteredJobs = filteredJobs.filter(job => job.category === currentFilter);
+                } else {
+                    // Filter people based on different criteria
+                    switch(currentFilter) {
+                        case 'available':
+                            filteredJobs = filteredJobs.filter(person => person.available);
+                            break;
+                        case 'experience':
+                            filteredJobs = filteredJobs.filter(person => person.experience >= 5);
+                            break;
+                        case 'freelance':
+                            filteredJobs = filteredJobs.filter(person => person.workType === 'freelance');
+                            break;
+                    }
+                }
+            }
+            
+            // Apply search filter
+            if (searchQuery) {
+                filteredJobs = filteredJobs.filter(item => {
+                    const searchFields = currentMode === 'job-seeker' 
+                        ? [item.title, item.company, item.description, ...(item.skills || [])]
+                        : [item.name, item.position, item.description, ...(item.skills || [])];
+                    
+                    return searchFields.some(field => 
+                        field && field.toLowerCase().includes(searchQuery)
+                    );
+                });
+            }
+            
+            return filteredJobs;
+        }
+
+        // Switch between modes
+        function switchMode(mode) {
+            currentMode = mode;
+            currentFilter = mode === 'job-seeker' ? 'urgent' : 'available';
+            searchQuery = '';
+            document.getElementById('search-input').value = '';
+            
+            // Update button states
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active', 'modern-button');
+                btn.classList.add('bg-white/20', 'text-white', 'border-2', 'border-white/30');
+            });
+            
+            const activeBtn = document.getElementById(mode + '-btn');
+            activeBtn.classList.add('active', 'modern-button');
+            activeBtn.classList.remove('bg-white/20', 'text-white', 'border-2', 'border-white/30');
+            
+            updateModeUI();
+        }
+
+        // Update mode UI
+        function updateModeUI() {
+            const categoryFilter = document.getElementById('category-filter');
+            
+            if (currentMode === 'job-seeker') {
+                updateJobSeekerCategoryFilter();
+                renderJobs();
+            } else {
+                updateEmployerCategoryFilter();
+                renderPeople();
+            }
+        }
+
+        // Update job seeker category filter
+        function updateJobSeekerCategoryFilter() {
+            const categoryFilter = document.getElementById('category-filter');
+            categoryFilter.innerHTML = `
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="touch-target bg-gray-100 rounded-full">🏷️</div>
+                    <h2 class="mobile-subtitle text-gray-800 font-bold">ประเภทงาน</h2>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="filterByCategory('urgent')" class="category-btn category-modern active mobile-btn">
+                        <span class="text-xl">🚨</span>
+                        <span class="mobile-subtitle">เร่งด่วน</span>
+                        <div class="status-badge status-urgent mt-1 text-xs">HOT</div>
+                    </button>
+                    <button onclick="filterByCategory('permanent')" class="category-btn category-modern mobile-btn">
+                        <span class="text-xl">👔</span>
+                        <span class="mobile-subtitle">พนักงานประจำ</span>
+                        <div class="status-badge status-verified mt-1 text-xs">VERIFIED</div>
+                    </button>
+                    <button onclick="filterByCategory('part-time')" class="category-btn category-modern mobile-btn">
+                        <span class="text-xl">⏰</span>
+                        <span class="mobile-subtitle">จ๊อบเสริม</span>
+                        <div class="status-badge status-premium mt-1 text-xs">FLEXIBLE</div>
+                    </button>
+                    <button onclick="filterByCategory('all')" class="category-btn category-modern mobile-btn">
+                        <span class="text-xl">🌟</span>
+                        <span class="mobile-subtitle">ทั้งหมด</span>
+                        <div class="status-badge bg-gray-500 text-white mt-1 text-xs">ALL</div>
+                    </button>
+                </div>
+            `;
+        }
+
+        // Update employer category filter
+        function updateEmployerCategoryFilter() {
+            const categoryFilter = document.getElementById('category-filter');
+            categoryFilter.innerHTML = `
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="touch-target bg-gray-100 rounded-full">👥</div>
+                    <h2 class="mobile-subtitle text-gray-800 font-bold">กรองตามประเภท</h2>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="filterPeopleByCategory('available')" class="category-btn category-modern active mobile-btn">
+                        <span class="text-xl">✅</span>
+                        <span class="mobile-subtitle">พร้อมทำงาน</span>
+                        <div class="status-badge status-verified mt-1 text-xs">READY</div>
+                    </button>
+                    <button onclick="filterPeopleByCategory('experience')" class="category-btn category-modern mobile-btn">
+                        <span class="text-xl">⭐</span>
+                        <span class="mobile-subtitle">ประสบการณ์สูง</span>
+                        <div class="status-badge status-premium mt-1 text-xs">EXPERT</div>
+                    </button>
+                    <button onclick="filterPeopleByCategory('freelance')" class="category-btn category-modern mobile-btn">
+                        <span class="text-xl">💼</span>
+                        <span class="mobile-subtitle">ฟรีแลนซ์</span>
+                        <div class="status-badge status-urgent mt-1 text-xs">FLEXIBLE</div>
+                    </button>
+                    <button onclick="filterPeopleByCategory('all')" class="category-btn category-modern mobile-btn">
+                        <span class="text-xl">🌟</span>
+                        <span class="mobile-subtitle">ทั้งหมด</span>
+                        <div class="status-badge bg-gray-500 text-white mt-1 text-xs">ALL</div>
+                    </button>
+                </div>
+            `;
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            currentFilter = category;
+            
+            // Update active button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            
+            renderJobs();
+            showNotification(`กรองตาม${categoryInfo[category].name}`, 'success');
+        }
+
+        // Filter people by category
+        function filterPeopleByCategory(category) {
+            currentFilter = category;
+            
+            // Update active button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            
+            renderPeople();
+        }
+
+        // Render jobs
+        function renderJobs() {
+            if (currentMode === 'job-seeker') {
+                renderJobsWithData(getFilteredJobs());
+            } else {
+                renderPeople();
+            }
+        }
+
+        // Render jobs with specific data
+        function renderJobsWithData(jobsData) {
+            const grid = document.getElementById('jobs-grid');
+            const noResults = document.getElementById('no-results');
+            const loading = document.getElementById('loading');
+            
+            // Show loading
+            loading.classList.remove('hidden');
+            grid.innerHTML = '';
+            
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                
+                if (jobsData.length === 0) {
+                    grid.innerHTML = '';
+                    noResults.classList.remove('hidden');
+                    return;
+                }
+                
+                noResults.classList.add('hidden');
+                
+                grid.innerHTML = jobsData.map(job => {
+                    const categoryData = categoryInfo[job.category];
+                    const salaryRange = `${job.salaryMin.toLocaleString()}-${job.salaryMax.toLocaleString()}`;
+                    const daysAgo = Math.floor((new Date() - new Date(job.posted)) / (1000 * 60 * 60 * 24));
+                    
+                    return `
+                        <div class="mobile-card card-modern p-4 floating-card job-card slide-up ${job.featured ? 'ring-2 ring-yellow-400' : ''}">
+                            ${job.featured ? '<div class="absolute top-3 right-3 status-badge status-premium text-xs">FEATURED</div>' : ''}
+                            ${job.urgent ? '<div class="absolute top-3 left-3 status-badge status-urgent text-xs">URGENT</div>' : ''}
+                            
+                            <div class="flex items-start gap-3 mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-2xl flex-shrink-0">
+                                    ${job.companyLogo || categoryData.icon}
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="mobile-subtitle text-gray-900 mb-1 font-bold leading-tight">${job.title}</h3>
+                                    <p class="text-sm text-gray-600 mb-2">${job.company}</p>
+                                    <div class="flex items-center gap-2 text-xs text-gray-500">
+                                        <span>⭐ ${(4.0 + Math.random()).toFixed(1)}</span>
+                                        <span>•</span>
+                                        <span>${job.applications} คน</span>
+                                        <span>•</span>
+                                        <span>${daysAgo === 0 ? 'วันนี้' : `${daysAgo} วัน`}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="status-badge bg-indigo-100 text-indigo-700 text-xs">
+                                    ${categoryData.name}
+                                </span>
+                                <span class="status-badge bg-blue-100 text-blue-700 text-xs">
+                                    ${jobTypeNames[job.type]}
+                                </span>
+                                <span class="status-badge bg-gray-100 text-gray-700 text-xs">
+                                    ${job.experience} ปี
+                                </span>
+                            </div>
+                            
+                            <div class="space-y-2 mb-4">
+                                <div class="flex items-center gap-2 text-sm text-gray-600">
+                                    <span class="text-base">📍</span>
+                                    <span class="truncate">${job.location}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-base">💰</span>
+                                    <span class="salary-badge px-3 py-1 rounded-full font-bold text-sm">${salaryRange} บาท</span>
+                                </div>
+                            </div>
+                            
+                            ${job.skills ? `
+                                <div class="mb-4">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="text-base">🛠️</span>
+                                        <span class="text-sm font-semibold text-gray-700">ทักษะ</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-1">
+                                        ${job.skills.slice(0, 3).map(skill => 
+                                            `<span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">${skill}</span>`
+                                        ).join('')}
+                                        ${job.skills.length > 3 ? `<span class="text-xs text-gray-500">+${job.skills.length - 3}</span>` : ''}
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            <p class="text-sm text-gray-700 mb-4 line-clamp-2">${job.description}</p>
+                            
+                            <div class="flex gap-2">
+                                <button onclick="viewJobDetails(${job.id})" class="modern-button mobile-btn flex-1 text-sm py-3">
+                                    <span class="text-lg">👁️</span>
+                                    <span>ดูรายละเอียด</span>
+                                </button>
+                                <button onclick="applyJob(${job.id})" class="mobile-btn bg-green-500 text-white flex-1 text-sm py-3">
+                                    <span class="text-lg">📝</span>
+                                    <span>สมัครเลย</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }, 500);
+        }
+
+        // Render people
+        function renderPeople() {
+            const grid = document.getElementById('jobs-grid');
+            const noResults = document.getElementById('no-results');
+            const loading = document.getElementById('loading');
+            
+            const filteredPeople = getFilteredJobs();
+            
+            // Show loading
+            loading.classList.remove('hidden');
+            grid.innerHTML = '';
+            
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                
+                if (filteredPeople.length === 0) {
+                    grid.innerHTML = '';
+                    noResults.classList.remove('hidden');
+                    return;
+                }
+                
+                noResults.classList.add('hidden');
+                
+                grid.innerHTML = filteredPeople.map(person => {
+                    const stars = '⭐'.repeat(Math.floor(person.rating));
+                    const availabilityBadge = person.available ? 
+                        'status-badge status-verified' :
+                        'status-badge bg-red-100 text-red-700';
+                    const availabilityText = person.available ? 'พร้อมทำงาน' : 'ไม่ว่าง';
+                    
+                    return `
+                        <div class="card-modern p-6 floating-card job-card slide-up">
+                            <div class="flex items-start gap-4 mb-6">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-3xl flex-shrink-0">
+                                    ${person.avatar}
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="text-premium-lg text-gray-900 mb-2 font-bold">${person.name}</h3>
+                                    <p class="text-premium text-gray-600 mb-3">${person.position} • ${person.age} ปี</p>
+                                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                                        <span>${stars} ${person.rating}</span>
+                                        <span>•</span>
+                                        <span>${person.projects} โปรเจกต์</span>
+                                        <span>•</span>
+                                        <span>${person.experience} ปี ประสบการณ์</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="${availabilityBadge}">
+                                    ${availabilityText}
+                                </span>
+                                <span class="status-badge bg-blue-100 text-blue-700">
+                                    ${jobTypeNames[person.workType] || person.workType}
+                                </span>
+                                ${person.certifications ? `
+                                    <span class="status-badge status-premium">
+                                        CERTIFIED
+                                    </span>
+                                ` : ''}
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div class="flex items-center gap-3 text-premium text-gray-600">
+                                    <div class="icon-premium text-lg">📍</div>
+                                    <span>${person.location}</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="icon-premium text-lg">💰</div>
+                                    <span class="salary-badge px-4 py-2 rounded-full font-bold">${person.expectedSalary} บาท</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-premium text-gray-600">
+                                    <div class="icon-premium text-lg">🎓</div>
+                                    <span class="truncate">${person.education}</span>
+                                </div>
+                                ${person.portfolio ? `
+                                    <div class="flex items-center gap-3 text-premium text-gray-600">
+                                        <div class="icon-premium text-lg">🌐</div>
+                                        <span class="truncate text-blue-600">${person.portfolio}</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                            
+                            <div class="mb-6">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="icon-premium text-lg">🛠️</div>
+                                    <span class="text-premium font-semibold text-gray-700">ทักษะ</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    ${person.skills.slice(0, 4).map(skill => 
+                                        `<span class="text-sm bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">${skill}</span>`
+                                    ).join('')}
+                                    ${person.skills.length > 4 ? `<span class="text-sm text-gray-500">+${person.skills.length - 4}</span>` : ''}
+                                </div>
+                            </div>
+                            
+                            <p class="text-premium text-gray-700 mb-6 line-clamp-2">${person.description}</p>
+                            
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <button onclick="viewPersonDetails(${person.id})" class="modern-button flex-1">
+                                    <span class="text-xl">👤</span>
+                                    <span>ดูโปรไฟล์</span>
+                                </button>
+                                <button onclick="contactPerson(${person.id})" class="button-premium ${person.available ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-500'} flex-1" ${!person.available ? 'disabled' : ''}>
+                                    <span class="text-xl">${person.available ? '📞' : '🚫'}</span>
+                                    <span>${person.available ? 'ติดต่อ' : 'ไม่ว่าง'}</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }, 500);
+        }
+
+        // View job details
+        function viewJobDetails(id) {
+            const job = jobs.find(j => j.id === id);
+            if (!job) return;
+            
+            const categoryData = categoryInfo[job.category];
+            const salaryRange = `${job.salaryMin.toLocaleString()}-${job.salaryMax.toLocaleString()}`;
+            const daysAgo = Math.floor((new Date() - new Date(job.posted)) / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('modal-content').innerHTML = `
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex items-start gap-4 flex-1 min-w-0">
+                            <span class="text-4xl flex-shrink-0">${job.companyLogo || categoryData.icon}</span>
+                            <div class="flex-1 min-w-0">
+                                <h2 class="text-2xl font-bold text-gray-900 break-words leading-tight mb-2">${job.title}</h2>
+                                <p class="text-xl font-semibold text-gray-700 mb-4">${job.company}</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    ${job.featured ? '<span class="status-badge status-premium">FEATURED</span>' : ''}
+                                    ${job.urgent ? '<span class="status-badge status-urgent">URGENT</span>' : ''}
+                                    <span class="status-badge bg-indigo-100 text-indigo-700">
+                                        ${categoryData.name}
+                                    </span>
+                                    <span class="status-badge bg-blue-100 text-blue-700">
+                                        ${jobTypeNames[job.type]}
+                                    </span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-500">
+                                    <span>⭐ ${(4.0 + Math.random()).toFixed(1)}</span>
+                                    <span>•</span>
+                                    <span>${job.applications} คนสมัครแล้ว</span>
+                                    <span>•</span>
+                                    <span>โพสต์ ${daysAgo === 0 ? 'วันนี้' : `${daysAgo} วันที่แล้ว`}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="closeDetailModal()" class="text-gray-400 hover:text-gray-600 text-4xl ml-4 p-2 rounded-full hover:bg-gray-100">×</button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="icon-premium bg-green-500 text-white">💰</div>
+                                <h3 class="text-lg font-bold text-green-800">เงินเดือน</h3>
+                            </div>
+                            <p class="text-2xl font-bold text-green-700">${salaryRange} บาท</p>
+                            <p class="text-sm text-green-600 mt-1">ต่อเดือน</p>
+                        </div>
+                        
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="icon-premium bg-blue-500 text-white">📍</div>
+                                <h3 class="text-lg font-bold text-blue-800">สถานที่ทำงาน</h3>
+                            </div>
+                            <p class="text-lg font-semibold text-blue-700">${job.location}</p>
+                        </div>
+                        
+                        <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="icon-premium bg-purple-500 text-white">📊</div>
+                                <h3 class="text-lg font-bold text-purple-800">ประสบการณ์</h3>
+                            </div>
+                            <p class="text-lg font-semibold text-purple-700">${job.experience} ปี</p>
+                        </div>
+                        
+                        <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="icon-premium bg-orange-500 text-white">👥</div>
+                                <h3 class="text-lg font-bold text-orange-800">ผู้สมัคร</h3>
+                            </div>
+                            <p class="text-lg font-semibold text-orange-700">${job.applications} คน</p>
+                        </div>
+                    </div>
+                    
+                    ${job.skills ? `
+                        <div class="bg-gray-50 p-6 rounded-2xl mb-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="icon-premium">🛠️</div>
+                                <h3 class="text-lg font-bold text-gray-800">ทักษะที่ต้องการ</h3>
+                            </div>
+                            <div class="flex flex-wrap gap-3">
+                                ${job.skills.map(skill => 
+                                    `<span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full font-semibold">${skill}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    ${job.benefits ? `
+                        <div class="bg-yellow-50 p-6 rounded-2xl mb-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="icon-premium">🎁</div>
+                                <h3 class="text-lg font-bold text-yellow-800">สวัสดิการ</h3>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                ${job.benefits.map(benefit => 
+                                    `<div class="flex items-center gap-2">
+                                        <span class="text-yellow-600">✓</span>
+                                        <span class="text-yellow-800">${benefit}</span>
+                                    </div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="bg-gray-50 p-6 rounded-2xl mb-8">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="icon-premium">📝</div>
+                            <h3 class="text-lg font-bold text-gray-800">รายละเอียดงาน</h3>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed">${job.description}</p>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="applyJob(${job.id})" class="modern-button flex-1 text-lg py-4">
+                            <span class="text-2xl">📝</span>
+                            <span>สมัครงานนี้</span>
+                        </button>
+                        <button onclick="saveJob(${job.id})" class="button-premium bg-blue-500 text-white flex-1 text-lg py-4">
+                            <span class="text-2xl">💾</span>
+                            <span>บันทึกงาน</span>
+                        </button>
+                        <button onclick="shareJob(${job.id})" class="button-premium bg-purple-500 text-white flex-1 text-lg py-4">
+                            <span class="text-2xl">📤</span>
+                            <span>แชร์</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        // View person details
+        function viewPersonDetails(id) {
+            const person = people.find(p => p.id === id);
+            if (!person) return;
+            
+            const stars = '⭐'.repeat(Math.floor(person.rating));
+            const availabilityStatus = person.available ? 'พร้อมทำงาน' : 'ไม่ว่าง';
+            const availabilityColor = person.available ? 'text-green-600' : 'text-red-600';
+            
+            document.getElementById('modal-content').innerHTML = `
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex items-start gap-4 flex-1 min-w-0">
+                            <span class="text-4xl flex-shrink-0">${person.avatar}</span>
+                            <div class="flex-1 min-w-0">
+                                <h2 class="text-2xl font-bold text-gray-900 break-words leading-tight mb-2">${person.name}</h2>
+                                <p class="text-xl font-semibold text-gray-700 mb-4">${person.position}</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="status-badge bg-indigo-100 text-indigo-700">
+                                        ${person.age} ปี
+                                    </span>
+                                    <span class="status-badge ${person.available ? 'status-verified' : 'bg-red-100 text-red-700'}">
+                                        ${availabilityStatus}
+                                    </span>
+                                    ${person.certifications ? '<span class="status-badge status-premium">CERTIFIED</span>' : ''}
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-gray-500">
+                                    <span>${stars} ${person.rating}</span>
+                                    <span>•</span>
+                                    <span>${person.projects} โปรเจกต์</span>
+                                    <span>•</span>
+                                    <span>${person.experience} ปี ประสบการณ์</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="closeDetailModal()" class="text-gray-400 hover:text-gray-600 text-4xl ml-4 p-2 rounded-full hover:bg-gray-100">×</button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="icon-premium bg-green-500 text-white">💰</div>
+                                <h3 class="text-lg font-bold text-green-800">เงินเดือนที่ต้องการ</h3>
+                            </div>
+                            <p class="text-2xl font-bold text-green-700">${person.expectedSalary} บาท</p>
+                        </div>
+                        
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="icon-premium bg-blue-500 text-white">📍</div>
+                                <h3 class="text-lg font-bold text-blue-800">สถานที่</h3>
+                            </div>
+                            <p class="text-lg font-semibold text-blue-700">${person.location}</p>
+                        </div>
+                        
+                        <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="icon-premium bg-purple-500 text-white">🎓</div>
+                                <h3 class="text-lg font-bold text-purple-800">การศึกษา</h3>
+                            </div>
+                            <p class="text-lg font-semibold text-purple-700">${person.education}</p>
+                        </div>
+                        
+                        <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-2xl">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="icon-premium bg-orange-500 text-white">💼</div>
+                                <h3 class="text-lg font-bold text-orange-800">ประเภทงาน</h3>
+                            </div>
+                            <p class="text-lg font-semibold text-orange-700">${jobTypeNames[person.workType] || person.workType}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-6 rounded-2xl mb-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="icon-premium">🛠️</div>
+                            <h3 class="text-lg font-bold text-gray-800">ทักษะ</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            ${person.skills.map(skill => 
+                                `<span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full font-semibold">${skill}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    
+                    ${person.certifications ? `
+                        <div class="bg-yellow-50 p-6 rounded-2xl mb-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="icon-premium">🏆</div>
+                                <h3 class="text-lg font-bold text-yellow-800">ใบรับรอง</h3>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                ${person.certifications.map(cert => 
+                                    `<div class="flex items-center gap-2">
+                                        <span class="text-yellow-600">🏅</span>
+                                        <span class="text-yellow-800">${cert}</span>
+                                    </div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="bg-gray-50 p-6 rounded-2xl mb-8">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="icon-premium">📝</div>
+                            <h3 class="text-lg font-bold text-gray-800">เกี่ยวกับ</h3>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed">${person.description}</p>
+                    </div>
+                    
+                    ${person.portfolio ? `
+                        <div class="bg-blue-50 p-6 rounded-2xl mb-8">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="icon-premium">🌐</div>
+                                <h3 class="text-lg font-bold text-blue-800">Portfolio</h3>
+                            </div>
+                            <a href="https://${person.portfolio}" target="_blank" class="text-blue-600 hover:text-blue-800 font-semibold">${person.portfolio}</a>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="contactPerson(${person.id})" class="modern-button flex-1 text-lg py-4 ${!person.available ? 'opacity-50 cursor-not-allowed' : ''}" ${!person.available ? 'disabled' : ''}>
+                            <span class="text-2xl">${person.available ? '📞' : '🚫'}</span>
+                            <span>${person.available ? 'ติดต่อเพื่อจ้างงาน' : 'ไม่สามารถติดต่อได้'}</span>
+                        </button>
+                        <button onclick="savePerson(${person.id})" class="button-premium bg-blue-500 text-white flex-1 text-lg py-4">
+                            <span class="text-2xl">💾</span>
+                            <span>บันทึกโปรไฟล์</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        // Close detail modal
+        function closeDetailModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        // Apply for job
+        function applyJob(id) {
+            const job = jobs.find(j => j.id === id);
+            if (!job) return;
+            
+            job.applications++;
+            renderJobs();
+            closeDetailModal();
+            
+            showNotification(`สมัครงาน "${job.title}" ที่ ${job.company} เรียบร้อยแล้ว!`, 'success');
+        }
+
+        // Save job
+        function saveJob(id) {
+            const job = jobs.find(j => j.id === id);
+            if (!job) return;
+            
+            showNotification(`บันทึกงาน "${job.title}" แล้ว!`, 'success');
+        }
+
+        // Share job
+        function shareJob(id) {
+            const job = jobs.find(j => j.id === id);
+            if (!job) return;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: job.title,
+                    text: `ตำแหน่ง ${job.title} ที่ ${job.company}`,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                navigator.clipboard.writeText(window.location.href);
+                showNotification('คัดลอกลิงก์แล้ว!', 'success');
+            }
+        }
+
+        // Contact person
+        function contactPerson(id) {
+            const person = people.find(p => p.id === id);
+            if (!person) return;
+            
+            if (!person.available) {
+                showNotification('ขออภัย บุคคลนี้ไม่ว่างในขณะนี้', 'error');
+                return;
+            }
+            
+            closeDetailModal();
+            showNotification(`กำลังเชื่อมต่อกับ ${person.name}...`, 'success');
+            
+            // Simulate contact process
+            setTimeout(() => {
+                showNotification(`ติดต่อ ${person.name} ได้ที่ ${person.phone}`, 'success');
+            }, 1500);
+        }
+
+        // Save person
+        function savePerson(id) {
+            const person = people.find(p => p.id === id);
+            if (!person) return;
+            
+            showNotification(`บันทึกโปรไฟล์ ${person.name} แล้ว!`, 'success');
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : '⚠️';
+            
+            notification.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <span class="text-xl">${icon}</span>
+                    <div>
+                        <p class="font-semibold text-gray-800">${message}</p>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    container.removeChild(notification);
+                }, 400);
+            }, 3000);
+        }
+
+        // Show welcome notification
+        function showWelcomeNotification() {
+            setTimeout(() => {
+                showNotification('ยินดีต้อนรับสู่ Eazy Work! 🎉', 'success');
+            }, 1000);
+        }
+
+        // Save search preferences
+        function saveSearchPreferences() {
+            const preferences = {
+                mode: currentMode,
+                filter: currentFilter,
+                search: searchQuery
+            };
+            localStorage.setItem('eazywork_preferences', JSON.stringify(preferences));
+        }
+
+        // Load search preferences
+        function loadSearchPreferences() {
+            const saved = localStorage.getItem('eazywork_preferences');
+            if (saved) {
+                const preferences = JSON.parse(saved);
+                currentMode = preferences.mode || 'job-seeker';
+                currentFilter = preferences.filter || 'urgent';
+                searchQuery = preferences.search || '';
+                
+                if (searchQuery) {
+                    document.getElementById('search-input').value = searchQuery;
+                }
+            }
+        }
+
+        // Initialize animations
+        function initializeAnimations() {
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationDelay = Math.random() * 0.3 + 's';
+                        entry.target.classList.add('slide-up');
+                    }
+                });
+            });
+            
+            // Observe all cards
+            setTimeout(() => {
+                document.querySelectorAll('.floating-card').forEach(card => {
+                    observer.observe(card);
+                });
+            }, 100);
+        }
+
+        // Show add job modal
+        function showAddJobModal() {
+            document.getElementById('add-job-modal').classList.remove('hidden');
+        }
+
+        // Close add job modal
+        function closeAddJobModal() {
+            document.getElementById('add-job-modal').classList.add('hidden');
+            document.getElementById('add-job-form').reset();
+        }
+
+        // Submit new job
+        function submitJob(event) {
+            event.preventDefault();
+            
+            const formData = {
+                title: document.getElementById('job-title').value,
+                company: document.getElementById('job-company').value,
+                category: document.getElementById('job-category').value,
+                type: document.getElementById('job-type').value,
+                location: document.getElementById('job-location').value,
+                salaryMin: parseInt(document.getElementById('job-salary-min').value),
+                salaryMax: parseInt(document.getElementById('job-salary-max').value),
+                experience: parseInt(document.getElementById('job-experience').value),
+                description: document.getElementById('job-description').value,
+                skills: document.getElementById('job-skills').value.split(',').map(s => s.trim()).filter(s => s),
+                benefits: document.getElementById('job-benefits').value.split(',').map(s => s.trim()).filter(s => s),
+                featured: document.getElementById('job-featured').checked,
+                urgent: document.getElementById('job-urgent').checked
+            };
+            
+            // Validate salary range
+            if (formData.salaryMin >= formData.salaryMax) {
+                showNotification('เงินเดือนสูงสุดต้องมากกว่าเงินเดือนต่ำสุด', 'error');
+                return;
+            }
+            
+            // Create new job object
+            const newJob = {
+                id: jobs.length + 1,
+                title: formData.title,
+                company: formData.company,
+                category: formData.category,
+                location: formData.location,
+                salaryMin: formData.salaryMin,
+                salaryMax: formData.salaryMax,
+                type: formData.type,
+                description: formData.description,
+                experience: formData.experience,
+                applications: 0,
+                posted: new Date().toISOString().split('T')[0],
+                featured: formData.featured,
+                urgent: formData.urgent,
+                benefits: formData.benefits.length > 0 ? formData.benefits : null,
+                skills: formData.skills.length > 0 ? formData.skills : null,
+                companyLogo: getRandomCompanyLogo()
+            };
+            
+            // Add to jobs array
+            jobs.unshift(newJob); // Add to beginning of array
+            
+            // Close modal and refresh display
+            closeAddJobModal();
+            renderJobs();
+            
+            // Show success notification
+            showNotification(`เพิ่มงาน "${formData.title}" เรียบร้อยแล้ว!`, 'success');
+            
+            // Auto-filter to show the new job's category if it's not currently visible
+            if (currentFilter !== formData.category && currentFilter !== 'all') {
+                filterByCategory(formData.category);
+            }
+        }
+
+        // Get random company logo
+        function getRandomCompanyLogo() {
+            const logos = ['🚀', '🎨', '🎯', '📱', '🤖', '📈', '💼', '🏢', '⚡', '🌟', '🔥', '💡'];
+            return logos[Math.floor(Math.random() * logos.length)];
+        }
+
+        // Update mode UI to show/hide add job button
+        function updateModeUI() {
+            const categoryFilter = document.getElementById('category-filter');
+            const addJobSection = document.getElementById('add-job-section');
+            
+            if (currentMode === 'job-seeker') {
+                addJobSection.style.display = 'block';
+                updateJobSeekerCategoryFilter();
+                renderJobs();
+            } else {
+                addJobSection.style.display = 'none';
+                updateEmployerCategoryFilter();
+                renderPeople();
+            }
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97b45881f5e199a9',t:'MTc1NzIyODYwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
